@@ -1,0 +1,17 @@
+﻿@model LinkLibrary.Models.LinkToAdd
+@{
+    var url = Context.Request.GetDisplayUrl();
+    var uri = new Uri(url);
+
+    var ids = uri.Segments;
+
+    var actionUrl = "http://localhost:52690/links/" + ids[2] + "Edit/" + ids[4];
+
+}
+
+<form action="@actionUrl" method="post">
+    <label for="address">New link</label>
+    <input type="text" name="address" />
+
+    <input type="submit" name="sub" />
+</form>

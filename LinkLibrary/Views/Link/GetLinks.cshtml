@@ -1,0 +1,180 @@
+﻿@using LinkLibrary.Models
+@model IEnumerable<LinkViewDto>
+@{
+    var url = Context.Request.GetDisplayUrl();
+    var first = url.IndexOf("links/") + 6;
+    int last = url.Contains('?') ? url.IndexOf('?') : url.Length;
+
+    var id = url.Substring(first, last - first);
+
+}
+<div class="navbar-right">
+    <a href="http://localhost:52690/links/@id/Add" class="btn btn-default">Add link</a>
+    <form action="http://localhost:52690/logout" method="get" id="logoutForm" >
+        <button type="submit" class="btn">Log out</button>
+    </form>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr class="text-nowrap">
+            <th scope="col">
+                Id
+                <div class="btn-group">
+                    <a href="?sort=id" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                    <a href="?sort=-id" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                </div>
+            </th>
+            <th scope="col"></th>
+            <th scope="col">
+                Title
+                <div class="btn-group">
+                    <a href="?sort=title" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                    <a href="?sort=-title" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Likes
+                <div class="btn-group">
+                    <a href="?sort=likes" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                    <a href="?sort=-likes" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Author
+                <div class="btn-group">
+                    <a href="?sort=authorname" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                    <a href="?sort=-authorname" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Duration
+                <div class="btn-group">
+                    <a href="?sort=duration" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                    <a href="?sort=-duration" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Provider
+                <div class="btn-group">
+                    <a href="?sort=provider" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                    <a href="?sort=-provider" class="btn btn-default btn-xs" role="button" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" />
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+            </th>
+        </tr>
+    </thead>
+    @foreach (var link in Model)
+    {
+        <tr>
+            <td>@link.Id</td>
+            <td><img src="@link.ThumbnailUrl" /></td>
+            <td><a href="@link.Address">@link.Title</a> </td>
+            <td>@link.Likes</td>
+            <td>@link.AuthorName</td>
+            <td>@link.Duration</td>
+            <td>@link.Provider</td>
+            <td class="text-nowrap">
+                <a href="./@link.UserId/Edit/@link.Id">Edit</a>
+                |
+                <a href="./@link.UserId/Delete/@link.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            var socketUrl = "ws://" + window.location.host;
+            var socket = new WebSocket(socketUrl);
+
+            socket.onmessage = function (e) {
+                console.log(e);
+                $('#msgs').append(e.data + '<br />');
+            };
+            
+        });
+    </script>
+}
+@{
+    var li = Context.Response.Headers.Values.TakeLast(1).FirstOrDefault().ToString();
+    first = li.IndexOf("currentPage") + 13;
+    li = li.Substring(first);
+    last = li.IndexOf(',');
+    var currentPage = Convert.ToInt32(li.Substring(0, last));
+
+    first = li.IndexOf("pageSize") + 10;
+    li = li.Substring(first);
+    last = li.IndexOf(',');
+    var pageSize = Convert.ToInt32(li.Substring(0, last));
+
+    first = li.IndexOf("totalResult") + 13;
+    li = li.Substring(first);
+    last = li.IndexOf(',');
+    var totalResult = Convert.ToInt32(li.Substring(0, last));
+
+    first = li.IndexOf("totalPages") + 12;
+    li = li.Substring(first);
+    last = li.IndexOf(',');
+    var totalPages = Convert.ToInt32(li.Substring(0, last));
+
+    first = li.IndexOf("previousPageLink") + 19;
+    li = li.Substring(first);
+    last = li.IndexOf('"');
+    var previousPageLink = li.Substring(0, last);
+
+
+
+    first = li.IndexOf("nextPageLink") + 15;
+    li = li.Substring(first);
+    last = li.IndexOf('"');
+    var nextPageLink = li.Substring(0, last);
+
+
+
+    if (totalPages > 1 && currentPage <= totalPages)
+    {
+        if (currentPage != 1)
+        {
+            <a href="@previousPageLink"> < Prevoius</a>
+        }
+        <a> | </a>
+        if (currentPage < totalPages)
+        {
+            <a href="@nextPageLink"> Next > </a>
+        }
+
+    }
+
+
+    <div style="border: solid black 1px; height:100px" class="msg">
+        <div id="msgs"></div>
+    </div>
+}

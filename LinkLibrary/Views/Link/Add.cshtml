@@ -1,0 +1,34 @@
+﻿@model LinkLibrary.Models.LinkToAdd
+@{
+    var url = Context.Request.GetDisplayUrl();
+    var uri = new Uri(url);
+
+    var ids = uri.Segments;
+
+    var actionUrl = "http://localhost:52690/links/" + ids[2] + "Add";
+}
+
+<form action="@actionUrl" method="post">
+    <label for="address">Link</label>
+    <input type="text" name="address" />
+
+    <button type="submit" id="sub"> Add film </button>
+</form>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            var sendButton = document.getElementById("sub");
+       
+            var socketUrl = "ws://" + window.location.host;
+            var socket = new WebSocket(socketUrl);
+
+        sendButton.onclick= function () {
+            
+            var message = "User "+ @ids[2].Replace("/", "") +" has just added new film to his collection" ;
+            socket.send(message);
+        };
+    });
+    </script>
+}

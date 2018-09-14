@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+@using LinkLibrary.Controllers
+
+@inject SignInManager<IdentityUser<int>> SignInManager
+
+
+    <form action="http://localhost:52690/Logout" method="post" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    </form>
+
+

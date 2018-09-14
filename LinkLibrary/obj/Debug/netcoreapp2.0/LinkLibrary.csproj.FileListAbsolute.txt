@@ -1,0 +1,12 @@
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\bin\Debug\netcoreapp2.0\LinkLibrary.deps.json
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\bin\Debug\netcoreapp2.0\LinkLibrary.runtimeconfig.json
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\bin\Debug\netcoreapp2.0\LinkLibrary.runtimeconfig.dev.json
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\bin\Debug\netcoreapp2.0\LinkLibrary.dll
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\bin\Debug\netcoreapp2.0\LinkLibrary.pdb
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\LinkLibrary.csprojAssemblyReference.cache
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\LinkLibrary.csproj.CoreCompileInputs.cache
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\LinkLibrary.AssemblyInfoInputs.cache
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\LinkLibrary.AssemblyInfo.cs
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\LinkLibrary.dll
+c:\users\dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\LinkLibrary.pdb
+C:\Users\Dawid\source\repos\LinkLibrary\LinkLibrary\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
