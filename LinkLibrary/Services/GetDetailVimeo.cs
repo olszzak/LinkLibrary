@@ -21,6 +21,9 @@ namespace LinkLibrary.Services
         {
             this.url = url;
             string videoId;
+            /* Kuba: Możesz dać int index = url.LastIndexOf("/") + 1;
+             * string videoId = url.Substring(index);
+            */
             int index = url.LastIndexOf("/");
             videoId = url.Substring(index + 1, url.Length - index - 1);
 

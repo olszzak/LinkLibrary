@@ -4,6 +4,7 @@ namespace LinkLibrary.Migrations
 {
     public partial class deletedForeignKey : Migration
     {
+        // Kuba: Możesz wywalić tą pustą migrację
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 

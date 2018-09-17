@@ -25,6 +25,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace LinkLibrary.Controllers
 {
+    /* Kuba: Trzymaj się formatowania kodu: usuwaj niepotrzebne entery, nieużywane usingi,
+     * dodawaj odstępy między między funkcjami, deklaracjami zmiennych a funkcjami i przed i po if'ach
+    */
     [Route("links")]
     public class LinkController : Controller
     {
@@ -42,6 +45,7 @@ namespace LinkLibrary.Controllers
         [Route("{userId}/Add")]
         public IActionResult Add(int userId)
         {
+            // Kuba: Staraj się używać nazw zmiennych opisujących daną zmienną. Tutaj można dać var currentUserId
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
             
@@ -51,7 +55,7 @@ namespace LinkLibrary.Controllers
         [HttpPost("{userId}/Add")]
         public IActionResult Add(int userId, LinkToAddDto linkToAddDto)
         {
-            
+            // Kuba: Tą logikę wykorzystujesz tu w kilku miejscach. Możesz zrobić osobną funkcję w repo i potem ją tylko wywoływać
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
             
@@ -79,6 +83,11 @@ namespace LinkLibrary.Controllers
             var linksToReturn = Mapper.Map<IEnumerable<LinkViewDto>>(links);
             foreach (var link in linksToReturn)
             {
+                /* Kuba: Możesz pobrać LinkDetailsDto do zmiennej i potem spróbować zmapować link i linkDetails
+                 * var linkDetails = GetDetails(link.Address);
+                 * link = Mapper.Map<LinkViewDto>(linkDetails);
+                */
+
                 link.Title = GetDetails(link.Address).Title;
                 link.Provider = GetDetails(link.Address).Provider;
                 link.ThumbnailUrl = GetDetails(link.Address).ThumbnailUrl;

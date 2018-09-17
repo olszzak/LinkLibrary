@@ -21,6 +21,7 @@ namespace LinkLibrary.Services
             string videoId;
             if (url.Contains("="))
             {
+                // Kuba: Tak samo jak w Vimeo
                 int index = url.IndexOf("=");
                 videoId = url.Substring(index+1, url.Length - index - 1);
             }else

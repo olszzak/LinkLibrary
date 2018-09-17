@@ -14,7 +14,7 @@ namespace LinkLibrary.Models
         public string ThumbnailUrl { get; set; }
         public string AuthorName { get; set; }
         public string Duration { get; set; }
-        public int viewCount { get; set; }
+        public int ViewCount { get; set; }
         public int Likes { get; set; }
         public int UserId { get; set; }
     }

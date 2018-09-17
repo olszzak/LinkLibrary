@@ -45,6 +45,10 @@ namespace LinkLibrary.Controllers
 
             if (user != null)
             {
+                /* Kuba: Przy wywoływaniu funckji z boolowymi wartościami możesz dodawać nazwy zmiennej, 
+                 * bo przy kilku takich boolach można się pogubić co jest czym
+                 * np. var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, isPersistent: false, lockoutOnFailure: false);
+                */
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
                 {
