@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace LinkLibrary.Controllers
 {
     [Route("links")]
+    // TODO BP: czy nie brakuje to atrybutu [Authorize]?
     public class LinkController : Controller
     {
         private readonly UserManager<IdentityUser<int>> _userManager;
@@ -39,23 +40,24 @@ namespace LinkLibrary.Controllers
             _signInManager = signInManager;
             _linkLibraryRepository = linkLibraryRepository;
         }
+        // TODO BP: po co tu ten userId? nie możesz po prostu wyciągać go z aktualnie zalogowanego usera?
         [Route("{userId}/Add")]
         public IActionResult Add(int userId)
         {
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
-            
+
             return View();
         }
 
         [HttpPost("{userId}/Add")]
         public IActionResult Add(int userId, LinkToAddDto linkToAddDto)
         {
-            
+
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
-            
-            
+
+
 
             var result = Mapper.Map<Link>(linkToAddDto);
             _linkLibraryRepository.AddLink(userId, result);
@@ -70,12 +72,12 @@ namespace LinkLibrary.Controllers
         [HttpGet("{userId}", Name ="LinkList")]
         public IActionResult GetLinks(int userId, string sort="id", int page=1, int pageSize=5)
         {
-            
+
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
-            
+
             var links = _linkLibraryRepository.GetLinks(userId);
-           
+
             var linksToReturn = Mapper.Map<IEnumerable<LinkViewDto>>(links);
             foreach (var link in linksToReturn)
             {
@@ -126,12 +128,12 @@ namespace LinkLibrary.Controllers
        // [HttpGet("{userId}/Edit/{linkId}")]
         public IActionResult GetLink(int userId, int linkId)
         {
-            
+
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
-            
+
             var link = _linkLibraryRepository.GetLink(userId, linkId);
-            
+
             var linkToReturn = Mapper.Map<LinkViewDto>(link);
             linkToReturn.Title = GetDetails(link.Address).Title;
             linkToReturn.Provider = GetDetails(link.Address).Provider;
@@ -139,7 +141,7 @@ namespace LinkLibrary.Controllers
             linkToReturn.AuthorName = GetDetails(link.Address).AuthorName;
             linkToReturn.Duration = GetDetails(link.Address).Duration;
             linkToReturn.Likes = GetDetails(link.Address).Likes;
-            
+
             return View(new JsonResult(linkToReturn));
         }
 
@@ -152,15 +154,15 @@ namespace LinkLibrary.Controllers
         [HttpPost("{userId}/Edit/{linkId}")]
         public IActionResult UpdateLink(int userId, int linkId, LinkToAddDto linkPatchDocument)
         {
-            
+
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
-            
+
             var link = _linkLibraryRepository.GetLink(userId, linkId);
             if (link == null) return NotFound();
 
             link.Address = linkPatchDocument.Address;
-            
+
             if(!_linkLibraryRepository.Save()) return StatusCode(500, "A problem happened while handling your request.");
             return Redirect("http://localhost:52690/links/" + userId);
         }
@@ -168,10 +170,10 @@ namespace LinkLibrary.Controllers
         [HttpGet("{userId}/Delete/{linkId}")]
         public IActionResult DeleteLink(int userId, int linkId)
         {
-            
+
             var u = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (u != userId) return Redirect("http://localhost:52690/login");
-            
+
             var link = _linkLibraryRepository.GetLink(userId, linkId);
             if (link == null) return NotFound();
 
@@ -197,7 +199,7 @@ namespace LinkLibrary.Controllers
             toReturn.AuthorName = hosting.GetUserName();
             toReturn.Duration = hosting.GetDuration();
             toReturn.Likes = hosting.GetLikes();
-            
+
             return toReturn;
         }
     }

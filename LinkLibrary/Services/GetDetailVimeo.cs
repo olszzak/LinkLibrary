@@ -13,6 +13,8 @@ using System.Xml.Linq;
 
 namespace LinkLibrary.Services
 {
+    // TODO BP: tak się nazywa metody nie klasy. jak już to VimeoVideoDetails. patrz komentarz w IGetDetails
+    // TODO BP: brak obsługi wyjątków
     public class GetDetailVimeo : IGetDetails
     {
         XElement xelement;
@@ -24,10 +26,15 @@ namespace LinkLibrary.Services
             int index = url.LastIndexOf("/");
             videoId = url.Substring(index + 1, url.Length - index - 1);
 
+            // TODO BP: url do consta
             string uri = "http://vimeo.com/api/v2/video/" + videoId + ".xml";
 
+            // TODO BP: mieszasz 2 konwencje, raz dajesz var raz dajesz typ
             var request = (HttpWebRequest)HttpWebRequest.Create(uri);
+            // TODO BP: System.Net.WebRequestMethods.Http.Get, albo przynajmniej zrób swoją klase z tymi constami
+            // TODO BP: pomyliłeś MediaType z Method. domyślną wartością method już jest "GET"
             request.MediaType = "GET";
+            // TODO BP: jw., System.Net.Mime.MediaTypeNames.Text.Xml
             request.ContentType = "text/xml";
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -48,6 +55,7 @@ namespace LinkLibrary.Services
 
         public string GetProvider()
         {
+            // TODO BP: do consta
             return "Vimeo";
         }
 

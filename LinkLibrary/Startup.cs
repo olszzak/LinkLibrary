@@ -24,8 +24,9 @@ namespace LinkLibrary
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddDbContext<LinkLibraryContext>(o => 
+            // TODO BP: takich rzeczy się nie hardcoduje
+            // https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings#aspnet-core
+            services.AddDbContext<LinkLibraryContext>(o =>
                     o.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=LinkLibraryDb;Trusted_Connection=True;"));
 
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>().AddEntityFrameworkStores<LinkLibraryContext>();
@@ -39,6 +40,7 @@ namespace LinkLibrary
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             app.UseDeveloperExceptionPage();
+            // TODO BP: ten async nic nie robi
             app.UseStatusCodePages(async context => {
                 var response = context.HttpContext.Response;
 
@@ -52,8 +54,10 @@ namespace LinkLibrary
             app.UseIdentity();
             app.UseWebSockets();
             app.UseMiddleware<SocketMiddleware>();
-            
 
+
+            // TODO BP: formatowanie
+            // TODO BP: to tu nie pasuje, powinno być w innej klasie, najlepiej specyficznej dla AutoMappera.
             AutoMapper.Mapper.Initialize(cfg =>
            {
                cfg.CreateMap<Link, LinkDto>();
@@ -62,11 +66,11 @@ namespace LinkLibrary
                cfg.CreateMap<LinkToAddDto, Link>();
                cfg.CreateMap<Link, LinkViewDto>();
            });
-            
+
 
             app.UseMvc();
 
-
+            // TODO BP: nie commituj pustych linii
         }
     }
 }

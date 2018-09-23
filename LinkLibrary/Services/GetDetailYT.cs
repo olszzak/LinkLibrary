@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 
 namespace LinkLibrary.Services
 {
+    // TODO BP: sprawdź komentarze z GetDetailsVimeo, większość ma zastosowanie też tutaj.
     public class GetDetailYT : IGetDetails
     {
         XmlDocument doc;
@@ -28,6 +29,7 @@ namespace LinkLibrary.Services
                 int index = url.LastIndexOf("/");
                 videoId = url.Remove(index);
             }
+            // TODO BP: w aplikacji nie hardcodujemy haseł, kluczy, api keyów ani nic podobnego.
             string uri = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=AIzaSyCb2IZlmTPeB7amCftKSTPSUHC-wE-kYcU&part=snippet,contentDetails,statistics";
 
             var request = (HttpWebRequest)HttpWebRequest.Create(uri);
@@ -41,7 +43,7 @@ namespace LinkLibrary.Services
 
             doc = (XmlDocument)JsonConvert.DeserializeXmlNode(kon, "root");
         }
-       
+
 
         public string GetDuration()
         {

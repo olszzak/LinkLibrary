@@ -1,4 +1,6 @@
-﻿using System;
+﻿// TODO BP: przed commitem sortujemy i czyścimy nieużywane referencje
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

@@ -1,0 +1,5 @@
+.idea
+
+# TODO BP: plików wynikowych nie przechowujemy w repozytorium
+**/obj
+**/bin
